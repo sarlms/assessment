@@ -1,13 +1,263 @@
+/* General reset and font settings */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Roboto', sans-serif;
+  background-color: #000000;
+  color: white;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Title styling */
+header {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #24eca3;
+  padding: 20px 0;
+}
+
+/* Layout for the page */
+.main-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.sidebar {
+  flex: 1;
+  margin-right: 40px;
+}
+
+.content {
+  flex: 3;
+}
+
+.filter-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  color: black;
+  text-align: left;
+}
+
+.filter-box h3 {
+  margin-bottom: 20px;
+  color: black;
+}
+
+.filter-box ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.filter-box ul li {
+  margin-bottom: 10px;
+}
+
+.filter-box button {
+  background-color: #24eca3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+
+
+.load-more:hover {
+  background-color: #1dbb85; /* Changer la couleur au survol */
+  transform: scale(1.05); /* Agrandir légèrement au survol */
+}
+
+.filter-box button.clear-btn {
+  background-color: #24eca3;
+  font-weight: bold;
+  color: #000000;
+  margin: 20px auto;
+  text-align: center;
+  border-radius: 30px;
+  display: block;
+  padding: 10px 20px;
+  margin-bottom: 2px;
+}
+
+.filter-box button.clear-btn:hover{
+  background-color: #1dbb85; /* Changer la couleur au survol */
+  transform: scale(1.05); /* Agrandir légèrement au survol */
+}
+
+/* Article styling */
+.article-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.article-card img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.article-header .author {
+  display: flex;
+  align-items: center;
+}
+
+.article-header .author h4 {
+  margin: 0;
+}
+
+.article-header .author p {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.article-header .detail-btn {
+  background-color: #24eca3;
+  border: none;
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.article-header .detail-btn:hover {
+  background-color: #1dbb85; /* Changer la couleur au survol */
+  transform: scale(1.05); /* Agrandir légèrement au survol */
+}
+
+.article-content {
+  margin-top: 15px;
+}
+
+.article-content h5 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.article-content p {
+  margin: 10px 0;
+}
+
+.article-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.category-tag {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border: 1.7px solid #24eca3;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  margin-top: 20px;
+}
+
+.load-more {
+  display: block;
+  background-color: #24eca3;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  padding: 15px;
+  text-align: center;
+  border: none;
+  width: 22%;
+  font-size: 1.3rem;
+  margin: 20px auto;
+  cursor: pointer;
+  border-radius: 55px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Style de base pour les checkboxes */
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: white;
+  border: 2px solid #24eca3;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  margin-right: 10px;
+  vertical-align: middle;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+/* Checkbox cochée avec une couleur verte */
+input[type="checkbox"]:checked {
+  background-color: #24eca3;
+  border-color: #24eca3;
+}
+
+/* Ajout d'une icône de coche lorsque cochée */
+input[type="checkbox"]:checked::before {
+  content: "✔";
+  display: block;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Animation de survol pour les checkboxes */
+input[type="checkbox"]:hover {
+  border-color: #1dbb85;
+  transform: scale(1.1); /* Agrandir légèrement la checkbox au survol */
+}
+
+/* Assurer une bonne accessibilité sur le focus */
+input[type="checkbox"]:focus {
+  outline: 2px solid #24eca3;
+}
+
+/* Flèche pour remonter en haut */
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #24eca3;
+  color: black;
+  font-size: 2rem;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.scroll-to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-to-top:hover {
+  background-color: #1dbb85;
 }
