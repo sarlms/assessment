@@ -1,7 +1,7 @@
 /* General reset and font settings */
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Arial', sans-serif;
   background-color: #000000;
   color: white;
 }
@@ -86,6 +86,13 @@ header {
 .filter-box button.clear-btn:hover{
   background-color: #1dbb85; /* Changer la couleur au survol */
   transform: scale(1.05); /* Agrandir légèrement au survol */
+}
+
+/* Limiter la taille et centrer le composant Detail */
+.detail-container {
+  max-width: 800px; /* Limite la largeur à 800px */
+  margin: 0 auto;   /* Centre la carte horizontalement */
+  padding: 20px;
 }
 
 /* Article styling */
@@ -260,4 +267,9 @@ input[type="checkbox"]:focus {
 
 .scroll-to-top:hover {
   background-color: #1dbb85;
+}
+
+/*LIZARD LOGO*/
+.lizard-logo{
+  width: 20%;
 }
