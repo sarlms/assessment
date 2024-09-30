@@ -1,0 +1,347 @@
+/* Variables */
+$primary-color: #24eca3;
+$secondary-color: #1dbb85;
+$text-color: white;
+$background-color: #000000;
+$card-background-color: white;
+$checkbox-color: white;
+$checkbox-border-color: $primary-color;
+
+/* Container styles for consistency */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* General reset and font settings */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: $background-color;
+  color: $text-color;
+}
+
+/* Header styling */
+header {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: $primary-color;
+  padding: 20px 0;
+}
+
+/* Responsive layout for main container */
+.main-container {
+  display: flex;
+  flex-wrap: wrap; /* Ensure the layout wraps on smaller screens */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.sidebar {
+  flex: 1;
+  margin-right: 40px;
+
+  @media (max-width: 1100px) {
+    flex: 100%; /* Sidebar takes full width on smaller screens */
+    margin-right: 0;
+    margin-bottom: 60px;
+  }
+}
+
+.content {
+  flex: 3;
+
+  @media (max-width: 768px) {
+    flex: 100%; /* Content takes full width on smaller screens */
+  }
+}
+
+/* Filter Box */
+.filter-box {
+  background-color: $card-background-color;
+  padding: 20px;
+  border-radius: 10px;
+  color: black;
+  text-align: left;
+
+  h3 {
+    margin-bottom: 20px;
+    color: black;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+
+    li {
+      margin-bottom: 10px;
+    }
+  }
+
+  button {
+    background-color: $primary-color;
+    color: $text-color;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+
+    &:hover {
+      background-color: $secondary-color;
+      transform: scale(1.05);
+    }
+  }
+
+  .clear-btn {
+    background-color: $primary-color;
+    font-weight: bold;
+    color: #000000;
+    margin: 20px auto;
+    text-align: center;
+    border-radius: 30px;
+    display: block;
+    padding: 10px 20px;
+
+    &:hover {
+      background-color: $secondary-color;
+      transform: scale(1.05);
+    }
+  }
+}
+
+/* Detail container */
+.detail-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+
+  @media (max-width: 768px) {
+    padding: 10px; /* Reduce padding on smaller screens */
+  }
+}
+
+/* Article card */
+.article-card {
+  background-color: $card-background-color;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: black;
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+
+  &.hidden {
+    opacity: 0;
+    transform: translateX(-50px) scale(0.95);
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+
+    @media (max-width: 768px) {
+      width: 40px;
+      height: 40px; /* Adjust image size for smaller screens */
+    }
+  }
+
+  .article-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .author {
+      display: flex;
+      align-items: center;
+
+      h4 {
+        margin: 0;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.85rem;
+      }
+    }
+
+    .detail-btn {
+      background-color: $primary-color;
+      border: none;
+      color: rgb(0, 0, 0);
+      padding: 10px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+
+      &:hover {
+        background-color: $secondary-color;
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .article-content {
+    margin-top: 15px;
+
+    h5 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    .article-categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+
+      .category-tag {
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+        border: 1.7px solid $primary-color;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        margin-top: 20px;
+      }
+    }
+  }
+}
+
+/* Load More Button */
+.load-more {
+  display: block;
+  background-color: $primary-color;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  padding: 15px;
+  text-align: center;
+  border: none;
+  width: 22%;
+  font-size: 1.3rem;
+  margin: 20px auto;
+  cursor: pointer;
+  border-radius: 55px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+
+  &:hover {
+    background-color: $secondary-color;
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: $checkbox-color;
+  border: 2px solid $checkbox-border-color;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  margin-right: 10px;
+  vertical-align: middle;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+
+  &:checked {
+    background-color: $primary-color;
+    border-color: $primary-color;
+
+    &::before {
+      content: "✔";
+      display: block;
+      color: $checkbox-color;
+      font-size: 14px;
+      text-align: center;
+      line-height: 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &:hover {
+    border-color: $secondary-color;
+    transform: scale(1.1);
+  }
+
+  &:focus {
+    outline: 2px solid $primary-color;
+  }
+}
+
+/* Scroll to top */
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: $primary-color;
+  color: black;
+  font-size: 2rem;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &:hover {
+    background-color: $secondary-color;
+  }
+}
+
+/*LIZARD LOGO*/
+.lizard-logo {
+  width: 20%;
+  display: block;
+  margin: 0 auto;
+  max-width: 250px; /* Larger size for bigger screens */
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .lizard-logo {
+    width: 30%; /* Larger width for mobile devices */
+  }
+
+  header {
+    font-size: 2rem; /* Reduce font size for mobile devices */
+  }
+
+  .filter-box {
+    padding: 15px;
+  }
+}

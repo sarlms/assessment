@@ -1,9 +1,9 @@
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import lizardLogo from '../assets/lizard-logo.png';
-import Detail from './Detail'; // Le nouveau composant "Detail"
-import Home from './Home'; // Nous allons déplacer le code actuel dans un composant Home
+import Detail from './Detail';
+import Home from './Home';
 
-function App() {
+const App: React.FC = () => {
   return (
     <Router>
       <div>

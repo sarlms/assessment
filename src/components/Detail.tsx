@@ -1,16 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-function Detail() {
-  const { id } = useParams(); // Récupérer l'ID à partir de l'URL
-  const [post, setPost] = useState(null);
+interface Author {
+  name: string;
+  avatar: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
+}
+
+interface Post {
+  id: string;
+  title: string;
+  publishDate: string;
+  author: Author;
+  summary: string;
+  categories: Category[];
+}
+
+const Detail: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [post, setPost] = useState<Post | null>(null);
 
   useEffect(() => {
-    // Fetch the specific post based on the ID
     fetch('/api/posts')
       .then((response) => response.json())
       .then((data) => {
-        const foundPost = data.posts.find((p) => p.id === id);
+        const foundPost = data.posts.find((p: Post) => p.id === id);
         setPost(foundPost);
       });
   }, [id]);

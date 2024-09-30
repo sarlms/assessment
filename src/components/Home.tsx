@@ -1,37 +1,56 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-function Home() {
-  const [posts, setPosts] = useState([]);
-  const [filteredPosts, setFilteredPosts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [visiblePosts, setVisiblePosts] = useState(5);
-  const [showScroll, setShowScroll] = useState(false);
+interface Author {
+  name: string;
+  avatar: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
+}
+
+interface Post {
+  id: string;
+  title: string;
+  publishDate: string;
+  author: Author;
+  summary: string;
+  categories: Category[];
+}
+
+const Home: React.FC = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [visiblePosts, setVisiblePosts] = useState<number>(5);
+  const [showScroll, setShowScroll] = useState<boolean>(false);
+  const [isFiltering, setIsFiltering] = useState<boolean>(false);
+  const [animateNewPosts, setAnimateNewPosts] = useState<boolean>(false); // New state to control new post animations
 
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Définition de checkScrollTop avec useCallback pour éviter de recréer la fonction à chaque rendu
   const checkScrollTop = useCallback(() => {
     if (!showScroll && window.pageYOffset > 400) {
       setShowScroll(true);
     } else if (showScroll && window.pageYOffset <= 400) {
       setShowScroll(false);
     }
-  }, [showScroll]); // Ajout de showScroll en tant que dépendance
+  }, [showScroll]);
 
   useEffect(() => {
-    // Fetch data from the mock API
     fetch('/api/posts')
       .then((response) => response.json())
       .then((data) => {
         setPosts(data.posts);
         setFilteredPosts(data.posts);
 
-        const uniqueCategories = [
-          ...new Set(data.posts.flatMap((post) => post.categories.map((c) => c.name)))
-        ];
+        const uniqueCategories: string[] = Array.from(
+          new Set(data.posts.flatMap((post: Post) => post.categories.map((c) => c.name)))
+        );
         setCategories(uniqueCategories);
 
         const queryParams = new URLSearchParams(location.search);
@@ -42,16 +61,16 @@ function Home() {
         }
       });
 
-    // Ajouter l'écouteur de scroll
     window.addEventListener('scroll', checkScrollTop);
 
-    // Nettoyage lors du démontage
     return () => {
       window.removeEventListener('scroll', checkScrollTop);
     };
-  }, [location.search, checkScrollTop]); // Ajout de checkScrollTop dans les dépendances
+  }, [location.search, checkScrollTop]);
 
-  const handleCategoryChange = (category) => {
+  const handleCategoryChange = (category: string) => {
+    setIsFiltering(true);
+    setAnimateNewPosts(false); // Don't animate on filter, only new posts should animate
     const updatedCategories = selectedCategories.includes(category)
       ? selectedCategories.filter((cat) => cat !== category)
       : [...selectedCategories, category];
@@ -64,9 +83,14 @@ function Home() {
     navigate({ search: queryParams.toString() });
 
     filterPostsByCategories(updatedCategories, posts);
+
+    // Ajouter un léger délai avant de désactiver l'état de filtrage
+    setTimeout(() => {
+      setIsFiltering(false);
+    }, 500);
   };
 
-  const filterPostsByCategories = (categories, allPosts) => {
+  const filterPostsByCategories = (categories: string[], allPosts: Post[]) => {
     if (categories.length === 0) {
       setFilteredPosts(allPosts);
     } else {
@@ -78,14 +102,25 @@ function Home() {
   };
 
   const loadMore = () => {
+    setAnimateNewPosts(true); // Set flag to animate only new posts
     setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 5);
+
+    // Stop animation after a short delay
+    setTimeout(() => {
+      setAnimateNewPosts(false);
+    }, 500); // Adjust time to match the animation duration
   };
 
   const clearFilters = () => {
+    setIsFiltering(true);
     setSelectedCategories([]);
     setFilteredPosts(posts);
 
     navigate({ search: '' });
+
+    setTimeout(() => {
+      setIsFiltering(false);
+    }, 500);
   };
 
   const scrollToTop = () => {
@@ -118,8 +153,11 @@ function Home() {
       </aside>
 
       <section className="content">
-        {filteredPosts.slice(0, visiblePosts).map((post) => (
-          <div key={post.id} className="article-card">
+        {filteredPosts.slice(0, visiblePosts).map((post, index) => (
+          <div
+            key={post.id}
+            className={`article-card ${index >= visiblePosts - 5 && animateNewPosts ? 'hidden' : ''}`}
+          >
             <div className="article-header">
               <div className="author">
                 <img src={post.author.avatar} alt={post.author.name} />
@@ -155,6 +193,6 @@ function Home() {
       </div>
     </div>
   );
-}
+};
 
 export default Home;
