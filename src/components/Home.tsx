@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
+//interfaces for defining the structure of the data (author, category, and post)
 interface Author {
   name: string;
   avatar: string;
@@ -21,18 +22,25 @@ interface Post {
 }
 
 const Home: React.FC = () => {
+  //state for storing the list of posts and filtered posts
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+  
+  //state for storing categories and selected categories
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  
+  //state for controlling the visible posts and animations
   const [visiblePosts, setVisiblePosts] = useState<number>(5);
   const [showScroll, setShowScroll] = useState<boolean>(false);
   const [isFiltering, setIsFiltering] = useState<boolean>(false);
-  const [animateNewPosts, setAnimateNewPosts] = useState<boolean>(false); // New state to control new post animations
+  const [animateNewPosts, setAnimateNewPosts] = useState<boolean>(false);
 
+  //hooks for location and navigation
   const location = useLocation();
   const navigate = useNavigate();
 
+  //check if the user has scrolled enough to show the scroll-to-top button
   const checkScrollTop = useCallback(() => {
     if (!showScroll && window.pageYOffset > 400) {
       setShowScroll(true);
@@ -41,88 +49,101 @@ const Home: React.FC = () => {
     }
   }, [showScroll]);
 
+  //useEffect to fetch posts from API and set initial categories and posts
   useEffect(() => {
     fetch('/api/posts')
       .then((response) => response.json())
       .then((data) => {
-        setPosts(data.posts);
-        setFilteredPosts(data.posts);
+        setPosts(data.posts); //store all posts in state
+        setFilteredPosts(data.posts); //initialize filtered posts with all posts
 
+        //extract unique categories from the posts
         const uniqueCategories: string[] = Array.from(
           new Set(data.posts.flatMap((post: Post) => post.categories.map((c) => c.name)))
         );
-        setCategories(uniqueCategories);
+        setCategories(uniqueCategories); //set unique categories
 
+        //check if categories exist in the query params and apply them
         const queryParams = new URLSearchParams(location.search);
         const categoriesFromQuery = queryParams.getAll('category');
         if (categoriesFromQuery.length > 0) {
           setSelectedCategories(categoriesFromQuery);
-          filterPostsByCategories(categoriesFromQuery, data.posts);
+          filterPostsByCategories(categoriesFromQuery, data.posts); //apply initial filters
         }
       });
 
-    window.addEventListener('scroll', checkScrollTop);
+    window.addEventListener('scroll', checkScrollTop); //add scroll listener
+
+    //reset filters when user clicks on the logo
+    if (location.state?.resetFilters) {
+      clearFilters();
+    }
 
     return () => {
-      window.removeEventListener('scroll', checkScrollTop);
+      window.removeEventListener('scroll', checkScrollTop); //cleanup scroll listener
     };
-  }, [location.search, checkScrollTop]);
+  }, [location.search, location.state, checkScrollTop]);
 
+  //handle category selection/deselection and filter posts accordingly
   const handleCategoryChange = (category: string) => {
-    setIsFiltering(true);
-    setAnimateNewPosts(false); // Don't animate on filter, only new posts should animate
+    setIsFiltering(true); //indicate filtering state
+    setAnimateNewPosts(false); //reset animations
+
+    //toggle category selection
     const updatedCategories = selectedCategories.includes(category)
       ? selectedCategories.filter((cat) => cat !== category)
       : [...selectedCategories, category];
 
-    setSelectedCategories(updatedCategories);
+    setSelectedCategories(updatedCategories); //update selected categories
 
+    //update the URL query string with selected categories
     const queryParams = new URLSearchParams(location.search);
-    queryParams.delete('category');
-    updatedCategories.forEach((cat) => queryParams.append('category', cat));
-    navigate({ search: queryParams.toString() });
+    queryParams.delete('category'); //clear previous categories
+    updatedCategories.forEach((cat) => queryParams.append('category', cat)); //add new categories
+    navigate({ search: queryParams.toString() }); //navigate with updated query
 
-    filterPostsByCategories(updatedCategories, posts);
+    filterPostsByCategories(updatedCategories, posts); //filter posts based on categories
 
-    // Ajouter un léger délai avant de désactiver l'état de filtrage
     setTimeout(() => {
-      setIsFiltering(false);
+      setIsFiltering(false); //reset filtering state after animation
     }, 500);
   };
 
+  //filter posts based on selected categories
   const filterPostsByCategories = (categories: string[], allPosts: Post[]) => {
     if (categories.length === 0) {
-      setFilteredPosts(allPosts);
+      setFilteredPosts(allPosts); //if no category is selected, show all posts
     } else {
       const filtered = allPosts.filter((post) =>
         post.categories.some((cat) => categories.includes(cat.name))
       );
-      setFilteredPosts(filtered);
+      setFilteredPosts(filtered); //update filtered posts
     }
   };
 
+  //handle loading more posts by increasing the number of visible posts
   const loadMore = () => {
-    setAnimateNewPosts(true); // Set flag to animate only new posts
-    setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 5);
-
-    // Stop animation after a short delay
-    setTimeout(() => {
-      setAnimateNewPosts(false);
-    }, 500); // Adjust time to match the animation duration
-  };
-
-  const clearFilters = () => {
-    setIsFiltering(true);
-    setSelectedCategories([]);
-    setFilteredPosts(posts);
-
-    navigate({ search: '' });
+    setAnimateNewPosts(true); //start animation for new posts
+    setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 5); //show 5 more posts
 
     setTimeout(() => {
-      setIsFiltering(false);
+      setAnimateNewPosts(false); //stop animation after 500ms
     }, 500);
   };
 
+  //clear all filters and show all posts
+  const clearFilters = () => {
+    setIsFiltering(true); //indicate filtering state
+    setSelectedCategories([]); //clear selected categories
+    setFilteredPosts(posts); //reset filtered posts to all posts
+    navigate({ search: '' }); //clear query params
+
+    setTimeout(() => {
+      setIsFiltering(false); //reset filtering state after animation
+    }, 500);
+  };
+
+  //scroll to the top of the page when called
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -133,6 +154,7 @@ const Home: React.FC = () => {
         <div className="filter-box">
           <h3>Filtrer par catégories</h3>
           <ul>
+            {/* render the list of categories with checkboxes */}
             {categories.map((category) => (
               <li key={category}>
                 <label>
@@ -147,12 +169,14 @@ const Home: React.FC = () => {
             ))}
           </ul>
           <div>
+            {/* button to clear all filters */}
             <button className="clear-btn" onClick={clearFilters}>CLEAR</button>
           </div>
         </div>
       </aside>
 
       <section className="content">
+        {/* render filtered posts and apply animations */}
         {filteredPosts.slice(0, visiblePosts).map((post, index) => (
           <div
             key={post.id}
@@ -183,11 +207,13 @@ const Home: React.FC = () => {
             </div>
           </div>
         ))}
+        {/* show the "load more" button if there are more posts to show */}
         {visiblePosts < filteredPosts.length && (
           <button className="load-more" onClick={loadMore}>LOAD MORE</button>
         )}
       </section>
 
+      {/* scroll-to-top button */}
       <div className={`scroll-to-top ${showScroll ? 'show' : ''}`} onClick={scrollToTop}>
         ⬆
       </div>

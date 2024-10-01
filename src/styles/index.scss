@@ -34,28 +34,32 @@ header {
 /* Responsive layout for main container */
 .main-container {
   display: flex;
-  flex-wrap: wrap; /* Ensure the layout wraps on smaller screens */
+  flex-wrap: wrap; /*ensure the layout wraps on smaller screens*/
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
+/* Sidebar styling */
 .sidebar {
   flex: 1;
   margin-right: 40px;
 
+/*responsive layout for sidebar on smaller screens*/
   @media (max-width: 1100px) {
-    flex: 100%; /* Sidebar takes full width on smaller screens */
+    flex: 100%; /*sidebar takes full width on smaller screens*/
     margin-right: 0;
     margin-bottom: 60px;
   }
 }
 
+/* Content styling */
 .content {
   flex: 3;
 
+/*responsive layout for content on smaller screens*/
   @media (max-width: 768px) {
-    flex: 100%; /* Content takes full width on smaller screens */
+    flex: 100%; /*content takes full width on smaller screens*/
   }
 }
 
@@ -67,20 +71,24 @@ header {
   color: black;
   text-align: left;
 
+/*filter title styling*/
   h3 {
     margin-bottom: 20px;
     color: black;
   }
 
+/*filter list styling*/
   ul {
     list-style: none;
     padding-left: 0;
 
+/*list item styling*/
     li {
       margin-bottom: 10px;
     }
   }
 
+/*filter button styling*/
   button {
     background-color: $primary-color;
     color: $text-color;
@@ -96,6 +104,7 @@ header {
     }
   }
 
+/*clear button styling*/
   .clear-btn {
     background-color: $primary-color;
     font-weight: bold;
@@ -118,9 +127,11 @@ header {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  padding-top: 70px;
 
+/*responsive padding for detail container on smaller screens*/
   @media (max-width: 768px) {
-    padding: 10px; /* Reduce padding on smaller screens */
+    padding: 10px; /*reduce padding on smaller screens*/
   }
 }
 
@@ -135,6 +146,7 @@ header {
   transform: translateX(0) scale(1);
   transition: opacity 0.5s ease, transform 0.5s ease;
 
+/*hidden article styling for animations*/
   &.hidden {
     opacity: 0;
     transform: translateX(-50px) scale(0.95);
@@ -145,37 +157,49 @@ header {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   }
 
+/*image styling inside article card*/
   img {
     border-radius: 50%;
     width: 50px;
     height: 50px;
     margin-right: 10px;
 
+/*responsive image size for smaller screens*/
     @media (max-width: 768px) {
       width: 40px;
-      height: 40px; /* Adjust image size for smaller screens */
+      height: 40px; /*adjust image size for smaller screens*/
     }
   }
 
+/*header section of the article card*/
   .article-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
+/*author styling inside the header*/
     .author {
       display: flex;
       align-items: center;
+      text-align: left; /*assure left text alignment*/
 
+/*author name styling*/
       h4 {
         margin: 0;
+        font-size: 1rem; /*adjust font size for smaller appearance*/
+        color: black;    /*set color to black*/
       }
 
+/*date styling*/
       p {
         margin: 0;
-        font-size: 0.85rem;
+        font-size: 0.85rem; /*adjust font size for date*/
+        color: black;       /*set date color to black*/
+        font-weight: lighter;
       }
     }
 
+/*details button styling inside the header*/
     .detail-btn {
       background-color: $primary-color;
       border: none;
@@ -193,24 +217,29 @@ header {
     }
   }
 
+/*content section of the article card*/
   .article-content {
     margin-top: 15px;
 
+/*title styling inside the content*/
     h5 {
       margin: 0;
       font-size: 1.2rem;
     }
 
+/*summary paragraph styling*/
     p {
       margin: 10px 0;
     }
 
+/*category tags styling inside the article card*/
     .article-categories {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       margin-top: 10px;
 
+/*individual category tag styling*/
       .category-tag {
         background-color: #ffffff;
         color: rgb(0, 0, 0);
@@ -222,6 +251,16 @@ header {
       }
     }
   }
+}
+
+/* Reset default styles for semantic tags */
+article, header, section, footer {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  border: none;
 }
 
 /* Load More Button */
@@ -245,6 +284,7 @@ header {
     transform: scale(1.05);
   }
 
+/*responsive width and padding for load more button on smaller screens*/
   @media (max-width: 768px) {
     width: 100%;
     padding: 10px;
@@ -266,6 +306,7 @@ input[type="checkbox"] {
   vertical-align: middle;
   transition: transform 0.2s ease, border-color 0.2s ease;
 
+/*checked checkbox state styling*/
   &:checked {
     background-color: $primary-color;
     border-color: $primary-color;
@@ -285,11 +326,13 @@ input[type="checkbox"] {
     }
   }
 
+/*checkbox hover state styling*/
   &:hover {
     border-color: $secondary-color;
     transform: scale(1.1);
   }
 
+/*checkbox focus state styling*/
   &:focus {
     outline: 2px solid $primary-color;
   }
@@ -313,35 +356,66 @@ input[type="checkbox"] {
   visibility: hidden;
   transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 
+/*visible scroll-to-top button state*/
   &.show {
     opacity: 1;
     visibility: visible;
   }
 
+/*scroll-to-top button hover state*/
   &:hover {
     background-color: $secondary-color;
   }
 }
 
-/*LIZARD LOGO*/
+/* Lizard logo */
 .lizard-logo {
   width: 20%;
   display: block;
-  margin: 0 auto;
-  max-width: 250px; /* Larger size for bigger screens */
+  margin: 20px auto; /*increase margin to push down*/
+  max-width: 250px; /*larger size for bigger screens*/
 }
 
 /* Responsive adjustments for mobile */
 @media (max-width: 768px) {
+
+/*responsive size for lizard logo on mobile*/
   .lizard-logo {
-    width: 30%; /* Larger width for mobile devices */
+    width: 30%; /*larger width for mobile devices*/
+    margin-top: 30px; /*increase top margin on mobile*/
   }
 
+/*responsive header font size for mobile*/
   header {
-    font-size: 2rem; /* Reduce font size for mobile devices */
+    font-size: 2rem; /*reduce font size for mobile devices*/
   }
 
+/*responsive padding for filter box on mobile*/
   .filter-box {
     padding: 15px;
+  }
+}
+
+/* Back button styling */
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: $primary-color;
+  color: black;
+  font-size: 2rem;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+/*back button hover state styling*/
+  &:hover {
+    background-color: $secondary-color;
+    transform: scale(1.05);
   }
 }
