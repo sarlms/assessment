@@ -154,7 +154,7 @@ const Home: React.FC = () => {
         <div className="filter-box">
           <h3>Filtrer par catégories</h3>
           <ul>
-            {/* render the list of categories with checkboxes */}
+            {/* render the list of categories with checkboxes*/}
             {categories.map((category) => (
               <li key={category}>
                 <label>
@@ -169,14 +169,14 @@ const Home: React.FC = () => {
             ))}
           </ul>
           <div>
-            {/* button to clear all filters */}
+            {/*button to clear all filters*/}
             <button className="clear-btn" onClick={clearFilters}>CLEAR</button>
           </div>
         </div>
       </aside>
 
       <section className="content">
-        {/* render filtered posts and apply animations */}
+        {/* render filtered posts and apply animations*/}
         {filteredPosts.slice(0, visiblePosts).map((post, index) => (
           <div
             key={post.id}
@@ -207,13 +207,13 @@ const Home: React.FC = () => {
             </div>
           </div>
         ))}
-        {/* show the "load more" button if there are more posts to show */}
+        {/* show the "load more" button if there are more posts to show*/}
         {visiblePosts < filteredPosts.length && (
           <button className="load-more" onClick={loadMore}>LOAD MORE</button>
         )}
       </section>
 
-      {/* scroll-to-top button */}
+      {/*scroll-to-top button */}
       <div className={`scroll-to-top ${showScroll ? 'show' : ''}`} onClick={scrollToTop}>
         ⬆
       </div>

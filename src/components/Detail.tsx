@@ -57,7 +57,7 @@ const Detail: React.FC = () => {
       <section className="article-card">
         <header className="article-header">
           <div className="author">
-            {/*author's avatar and name*/}
+            {/* author's avatar and name */}
             <img src={post.author.avatar} alt={post.author.name} />
             <div>
               <h4>{post.author.name}</h4>
@@ -66,11 +66,11 @@ const Detail: React.FC = () => {
           </div>
         </header>
         <section className="article-content">
-          {/*post title and summary*/}
+          {/*post title and summary */}
           <h5>{post.title}</h5>
           <p>{post.summary}</p>
           <footer className="article-categories">
-            {/*listing the categories associated with the post*/}
+            {/*listing the categories associated with the  post*/}
             {post.categories.map((category) => (
               <span key={category.id} className="category-tag">
                 {category.name}

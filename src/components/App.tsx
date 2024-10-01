@@ -6,7 +6,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <div>
-        {/*header with a link to reset filters and navigate to home page*/}
+        {/* header with a link to reset filters and navigate to home page*/}
         <header>
           <Link to="/" state={{ resetFilters: true }}>
             {/*logo image for the header, src based on environment variable*/}
@@ -14,11 +14,11 @@ const App: React.FC = () => {
           </Link>
         </header>
         <main>
-          {/*main routes of the application: home and detail page*/}
+          {/* main routes of the application: home and detail page */}
           <Routes>
             {/*route to home page*/}
             <Route path="/" element={<Home />} />
-            {/*route to detail page with dynamic id*/}
+            {/*route to detail page with dynamic id */}
             <Route path="/detail/:id" element={<Detail />} />
           </Routes>
         </main>
