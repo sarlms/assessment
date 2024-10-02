@@ -152,7 +152,7 @@ const Home: React.FC = () => {
     <div className="main-container">
       <aside className="sidebar">
         <div className="filter-box">
-          <h3>Filtrer par catégories</h3>
+          <h3>Filter by category</h3>
           <ul>
             {/* render the list of categories with checkboxes*/}
             {categories.map((category) => (
